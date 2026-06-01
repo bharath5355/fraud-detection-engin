@@ -23,3 +23,45 @@ An end-to-end, production-ready Machine Learning engine designed to detect and b
 5. Train the XGBoost model: `python train_model.py`
 6. Spin up the live ASGI gateway server: `python app.py`
 7. Navigate to `https://fraud-detection-engin.onrender.com/docs` to test transactions interactively using the Swagger UI dashboard.
+
+## 🔌 API Reference & Payload Schema
+
+### Production Endpoint
+`POST https://fraud-detection-engin.onrender.com/docs`
+
+### Request Body Schema (JSON)
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `amount` | Float | The dollar value of the current transaction. |
+| `network_risk_score` | Float | Network Layer Risk (0.0 to 1.0) tracking VPN, proxy, and IP threat signals. |
+| `tx_count_last_10m` | Integer | Velocity tracking: transaction count on this card in the last 10 minutes. |
+| `amount_to_avg_ratio` | Float | Current amount divided by the user's historical 30-day average spend. |
+| `device_encoded` | Integer | Channel mapping: 0 = Mobile App, 1 = Desktop Web, 2 = Mobile Web. |
+
+### Example 1: Making a Public Call via Terminal (cURL)
+```bash
+curl -X 'POST' \
+  'https://fraud-detection-engin.onrender.com/docs' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 4500.00,
+  "network_risk_score": 0.89,
+  "tx_count_last_10m": 5,
+  "amount_to_avg_ratio": 12.5,
+  "device_encoded": 2
+}'
+
+import requests
+
+url = "https://fraud-detection-engin.onrender.com/docs"
+payload = {
+    "amount": 4500.00,
+    "network_risk_score": 0.89,
+    "tx_count_last_10m": 5,
+    "amount_to_avg_ratio": 12.5,
+    "device_encoded": 2
+}
+
+response = requests.post(url, json=payload)
+print(response.json())
