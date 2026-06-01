@@ -22,4 +22,4 @@ An end-to-end, production-ready Machine Learning engine designed to detect and b
 4. Build features: `python feature_engineering.py`
 5. Train the XGBoost model: `python train_model.py`
 6. Spin up the live ASGI gateway server: `python app.py`
-7. Navigate to `http://127.0.0.1:8080/docs` to test transactions interactively using the Swagger UI dashboard.
+7. Navigate to `https://fraud-detection-engin.onrender.com` to test transactions interactively using the Swagger UI dashboard.
